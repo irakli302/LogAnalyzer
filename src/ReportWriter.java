@@ -1,7 +1,6 @@
-import javax.imageio.IIOException;
 import java.io.*;
 
-public class ReportWriter {
+public class ReportWriter implements AutoCloseable{
     public FileOutputStream fos;
     public BufferedWriter writer;
 
@@ -31,6 +30,7 @@ public class ReportWriter {
             this.writer.write("===============================");
             this.writer.newLine();
             this.writer.write("       LOG ANALYSIS SUMMARY");
+            this.writer.newLine();
             this.writer.write("===============================");
             this.writer.newLine();
             this.writer.write("Total Log Lines Processed: " + totalLines);
@@ -40,10 +40,18 @@ public class ReportWriter {
             this.writer.write("WARNING Messages: " + warningCount);
             this.writer.newLine();
             this.writer.write("ERROR Messages: " + errorCount);
+            this.writer.newLine();
             this.writer.write("===============================");
             this.writer.flush();
         }catch (IOException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (this.writer != null){
+            this.writer.close();
         }
     }
 }
