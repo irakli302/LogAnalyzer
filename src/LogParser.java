@@ -1,4 +1,3 @@
-import javax.imageio.IIOException;
 import java.io.*;
 
 public class LogParser {
@@ -18,15 +17,14 @@ public class LogParser {
         }
     }
 
-    public LogAnalysisResult parseLog(File inputFile){
+    public LogAnalysisResult parseLog(File inputFile, ReportWriter reportWriter){
         long totalLines = 0;
         long infoCount = 0;
         long warningCount = 0;
         long errorCount = 0;
         long unclassifiedCount = 0;
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        try(BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             String line;
             while ((line = reader.readLine()) != null){
                 totalLines++;
@@ -37,8 +35,10 @@ public class LogParser {
                 else if (line.contains("WARNING:"))
                     warningCount++;
 
-                else if (line.contains("ERROR:"))
+                else if (line.contains("ERROR:")){
                     errorCount++;
+                    reportWriter.writeErrorLine(line);
+                }
 
                 else
                     unclassifiedCount++;
