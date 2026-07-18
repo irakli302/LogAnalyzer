@@ -22,13 +22,13 @@ public class LogAnalyzer {
 
 
         if(outParentFile != null && !outParentFile.exists()){
-            System.out.println("Parent folder doesn`t exists for report file!");
+            System.err.println("Parent folder doesn`t exists for report file!");
             System.out.println("Creating missing output directory: " + outParentFile.getPath());
 
 
             boolean parent = outParentFile.mkdirs();
             if(!parent) {
-                System.out.println("Error: Could not create directory: " + outParentFile.getPath());
+                System.err.println("Error: Could not create directory: " + outParentFile.getPath());
                 System.exit(1);
             }
         }

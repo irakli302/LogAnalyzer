@@ -21,7 +21,7 @@ public class ReportWriter implements AutoCloseable{
         } catch (SyncFailedException e){
             System.err.println("Hardware disk sync failed: " + e.getMessage());
         } catch (IOException e){
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ public class ReportWriter implements AutoCloseable{
             this.writer.write("===============================");
             this.writer.flush();
         }catch (IOException e){
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
